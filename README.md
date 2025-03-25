@@ -1,2 +1,3 @@
-# mediapipe_custom_handmarks_python
+# mediapipe custom handmarks
+
 A python mediapipe custom handmarks 
