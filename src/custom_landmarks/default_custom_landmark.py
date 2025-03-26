@@ -17,16 +17,54 @@ from custom_landmarks.custom_landmark import CustomLandmark
 from custom_landmarks.decorator import point
 
 
-
 class DefaultCustomLandmark(CustomLandmark):
     @point("LEFT_RIB")
-    def calc_left_rib(self):
+    def l_rib(self):
         return self._middle(
             self._landmarks[self._plm.LEFT_HIP.value],
             self._landmarks[self._plm.LEFT_SHOULDER.value],
         )
 
+    @point("RIGHT_RIB")
+    def r_rib(self):
+        return self._middle(
+            self._landmarks[self._plm.RIGHT_HIP.value],
+            self._landmarks[self._plm.RIGHT_SHOULDER.value],
+        )
+
+    @point("MIDDLE_HIP")
+    def m_hip(self):
+        return self._middle(
+            self._landmarks[self._plm.LEFT_HIP.value],
+            self._landmarks[self._plm.RIGHT_HIP.value],
+        )
+
+    @point("MIDDLE_SHOULDER")
+    def m_shoulder(self):
+        return self._middle(
+            self._landmarks[self._plm.LEFT_SHOULDER.value],
+            self._landmarks[self._plm.RIGHT_SHOULDER.value],
+        )
+
+    @point("NECK")
+    def neck(self):
+        return self._middle(
+            self._landmarks[self._plm.NOSE.value], tuple(self.MIDDLE_SHOULDER)
+        )
+
+    @point("THORAX")
+    def thorax(self):
+        return self._middle(self.MIDDLE_HIP, self.MIDDLE_SHOULDER)
+
     def _middle(self, p1, p2):
-        p1 = np.array([p1.x, p1.y, p1.z])
-        p2 = np.array([p2.x, p2.y, p2.z])
+        def to_array(p):
+            if hasattr(p, "x"):
+                return np.array([p.x, p.y, p.z])
+            elif isinstance(p, (tuple, list, np.ndarray)):
+                return np.array(p)
+            else:
+                return np.array(list(p))  # fallback: LandmarkRef (iterable)
+
+        p1 = to_array(p1)
+        p2 = to_array(p2)
         return tuple((p1 + p2) / 2)
