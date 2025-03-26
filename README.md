@@ -1,3 +1,3 @@
-# mediapipe custom handmarks
+# custom handmarks
 
 A python mediapipe custom handmarks 

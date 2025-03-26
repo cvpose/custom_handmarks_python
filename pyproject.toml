@@ -1,0 +1,43 @@
+[project]
+name = "custom_landmarks"
+version = "0.0.1"
+authors = [
+  { name = "Denys G. Santos", email = "gsdenys@gmail.com" },
+]
+description = "A Python package for defining custom landmarks in Mediapipe making easy to calculate some new virtual points with a single extention class"
+readme = "README.md"
+requires-python = ">=3.10"
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: Apache Software License",
+]
+
+keywords = ["mediapipe", "custom landmarks", "ladmarks", "pose estimation", "computer vision", "biomechanics", "motion tracking"]
+
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+
+dependencies = [
+    "mediapipe >=0.10.0",
+    "numpy >=2.0.0",
+    "opencv-python >=4.7.0.72"
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "black", "ruff", "mypy"]
+docs = ["mkdocs", "mkdocs-material"]
+
+[project.urls]
+Homepage = "https://github.com/cvpose/custom_handmarks_python"
+Documentation = "https://github.com/cvpose/custom_handmarks_python/wiki"
+Issues = "https://github.com/cvpose/custom_handmarks_python/issues"
+Source = "https://github.com/cvpose/custom_handmarks_python"
