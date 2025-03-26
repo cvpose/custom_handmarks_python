@@ -41,3 +41,25 @@ Homepage = "https://github.com/cvpose/custom_handmarks_python"
 Documentation = "https://github.com/cvpose/custom_handmarks_python/wiki"
 Issues = "https://github.com/cvpose/custom_handmarks_python/issues"
 Source = "https://github.com/cvpose/custom_handmarks_python"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=custom_landmarks --cov-report=term-missing --cov-report=html"
+testpaths = [
+    "tests"
+]
+
+[tool.coverage.run]
+branch = true
+source = [
+    "src/custom_landmarks"
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "@abstractmethod"
+]

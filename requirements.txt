@@ -1,0 +1,10 @@
+numpy
+mediapipe
+opencv-python
+
+pytest
+pytest-dotenv
+pytest-cov
+
+mkdocs
+mkdocs-material

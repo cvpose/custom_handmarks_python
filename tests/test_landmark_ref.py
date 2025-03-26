@@ -11,22 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import numpy as np
-
-from custom_landmarks.custom_landmark import CustomLandmark
-from custom_landmarks.decorator import point
+from custom_landmarks.landmark_ref import LandmarkRef
 
 
+def test_landmark_ref_behaves_like_tuple():
+    ref = LandmarkRef(lambda: (0.1, 0.2, 0.3), lambda: 42)
 
-class DefaultCustomLandmark(CustomLandmark):
-    @point("LEFT_RIB")
-    def calc_left_rib(self):
-        return self._middle(
-            self._landmarks[self._plm.LEFT_HIP.value],
-            self._landmarks[self._plm.LEFT_SHOULDER.value],
-        )
-
-    def _middle(self, p1, p2):
-        p1 = np.array([p1.x, p1.y, p1.z])
-        p2 = np.array([p2.x, p2.y, p2.z])
-        return tuple((p1 + p2) / 2)
+    assert ref.value == 42
+    assert list(ref) == [0.1, 0.2, 0.3]
+    assert ref[1] == 0.2
+    assert repr(ref) == repr((0.1, 0.2, 0.3))

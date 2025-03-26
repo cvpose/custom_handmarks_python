@@ -5,8 +5,8 @@ This document describes the architecture of the custom landmark extension system
 ## Project Structure
 
 ```
-custom_landmarks/
-├── landmark/
+src/
+├── custom_landmarks/
 │   ├── abstract_custom_landmark.py
 │   ├── custom_landmark_base.py
 │   ├── custom_landmark.py
@@ -19,46 +19,11 @@ custom_landmarks/
 
 ## Class Diagram
 
-```mermaid
-classDiagram
-    class AbstractCustomLandmark {
-        +add_landmark()
-        +as_landmark_list()
-    }
-
-    class CustomLandmarkBase {
-        <<Mixin>>
-        +__init_subclass__()
-    }
-
-    class CustomLandmark {
-        +_register_custom_points()
-    }
-
-    class DefaultCustomLandmark {
-    }
-
-    class LandmarkRef {
-        +value
-        +__getitem__()
-        +__iter__()
-    }
-
-    class @point {
-        <<decorator>>
-    }
-
-    CustomLandmark --|> AbstractCustomLandmark
-    CustomLandmark --|> CustomLandmarkBase
-    DefaultCustomLandmark --|> CustomLandmark
-
-    CustomLandmarkBase --> LandmarkRef : returns
-    CustomLandmark --> @point : uses
-```
+![Class Diagram](./diagrams/class.png)
 
 ---
 
-## Core Components
+## Components
 
 ### 1. `abstract_custom_landmark.py`
 

@@ -57,6 +57,6 @@ class CustomLandmark(AbstractCustomLandmark, CustomLandmarkBase):
             if callable(method) and getattr(method, "_is_custom_landmark", False):
                 name = method._landmark_name
                 point = method()
-                index = self.add_landmark(point)
+                index = self._add_landmark(point)
                 self._custom_points[name] = point
                 self._custom_points_index[name] = index

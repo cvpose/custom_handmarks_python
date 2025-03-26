@@ -16,6 +16,8 @@ from typing import List, Tuple
 import matplotlib.pyplot as plt
 from mediapipe.python.solutions.drawing_styles import get_default_pose_landmarks_style
 
+from custom_landmarks.default_custom_landmark import DefaultCustomLandmark
+
 class CustomConnections:
     """
     Provides access to default MediaPipe pose connections and extended custom connections.
@@ -31,20 +33,20 @@ class CustomConnections:
     VIRTUAL_CONNECTIONS: List[Connection] = [
         # Spine and upper trunk
         (
-            CustomLandmarkItem.MIDDLE_HIP.value,
-            CustomLandmarkItem.MIDDLE_SHOULDER.value,
+            DefaultCustomLandmark.MIDDLE_HIP.value,
+            DefaultCustomLandmark.MIDDLE_SHOULDER.value,
         ),  # MIDDLE_HIP → MIDDLE_SHOULDER
         (
-            CustomLandmarkItem.MIDDLE_SHOULDER.value,
-            CustomLandmarkItem.NECK.value,
+            DefaultCustomLandmark.MIDDLE_SHOULDER.value,
+            DefaultCustomLandmark.NECK.value,
         ),  # MIDDLE_SHOULDER → NECK
         (
-            CustomLandmarkItem.LEFT_RIB.value,
-            CustomLandmarkItem.THORAX.value,
+            DefaultCustomLandmark.LEFT_RIB.value,
+            DefaultCustomLandmark.THORAX.value,
         ),  # LEFT_RIB → THORAX
         (
-            CustomLandmarkItem.THORAX.value,
-            CustomLandmarkItem.RIGHT_RIB.value,
+            DefaultCustomLandmark.THORAX.value,
+            DefaultCustomLandmark.RIGHT_RIB.value,
         ),  # THORAX → RIGHT_RIB
     ]
 

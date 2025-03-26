@@ -11,22 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import numpy as np
+import os
+import sys
+import pytest
+from unittest.mock import MagicMock
+from mediapipe.framework.formats import landmark_pb2
 
-from custom_landmarks.custom_landmark import CustomLandmark
-from custom_landmarks.decorator import point
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
+@pytest.fixture
+def fake_landmark():
+    def _lm(x, y, z):
+        lm = landmark_pb2.NormalizedLandmark()
+        lm.x = x
+        lm.y = y
+        lm.z = z
+        lm.visibility = 1.0
+        return lm
+    return _lm
 
-
-class DefaultCustomLandmark(CustomLandmark):
-    @point("LEFT_RIB")
-    def calc_left_rib(self):
-        return self._middle(
-            self._landmarks[self._plm.LEFT_HIP.value],
-            self._landmarks[self._plm.LEFT_SHOULDER.value],
-        )
-
-    def _middle(self, p1, p2):
-        p1 = np.array([p1.x, p1.y, p1.z])
-        p2 = np.array([p2.x, p2.y, p2.z])
-        return tuple((p1 + p2) / 2)
+@pytest.fixture
+def fake_landmarks(fake_landmark):
+    return [fake_landmark(x/10, x/10, x/10) for x in range(33)]
