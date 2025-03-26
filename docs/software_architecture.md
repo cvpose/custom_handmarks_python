@@ -43,8 +43,8 @@ classDiagram
         +__getitem__()
         +__iter__()
     }
-
-    class @point {
+    
+    class point {
         <<decorator>>
     }
 
@@ -53,7 +53,7 @@ classDiagram
     DefaultCustomLandmark --|> CustomLandmark
 
     CustomLandmarkBase --> LandmarkRef : returns
-    CustomLandmark --> @point : uses
+    CustomLandmark --> point : uses
 ```
 
 ---
