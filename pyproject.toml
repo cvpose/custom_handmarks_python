@@ -44,10 +44,11 @@ Source = "https://github.com/cvpose/custom_handmarks_python"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=custom_landmarks --cov-report=term-missing --cov-report=html"
+addopts = "--cov=custom_landmarks --cov-report=term-missing --cov-report=html -p no:warnings"
 testpaths = [
     "tests"
 ]
+
 
 [tool.coverage.run]
 branch = true

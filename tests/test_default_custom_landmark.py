@@ -46,3 +46,6 @@ def test_custom_landmark_index_values(fake_landmarks):
     assert lm.LEFT_RIB.value == 33  # First virtual point
     assert lm.THORAX.value == 38  # Last of the 6 custom points
     assert len(lm) == 39  # 33 original + 6 custom
+
+    # assert lm.LEFT_SHOULDER.x >= 0.0
+    assert lm.LEFT_SHOULDER.value == 11

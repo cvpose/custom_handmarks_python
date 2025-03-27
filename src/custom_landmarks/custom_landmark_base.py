@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from .landmark_ref import LandmarkRef
+import mediapipe as mp
 
 
 class CustomLandmarkBase:
@@ -42,6 +43,8 @@ class CustomLandmarkBase:
         Each property returns a `LandmarkRef`, allowing access to the computed 3D point and its index.
         """
         super().__init_subclass__(**kwargs)
+        
+        plm = mp.solutions.pose.PoseLandmark
 
         # Create a copy of the class dictionary to avoid mutation during iteration
         for attr_name, attr in list(vars(cls).items()):
@@ -57,3 +60,16 @@ class CustomLandmarkBase:
 
                 # Register the property dynamically with the name provided in the decorator
                 setattr(cls, name, make_property(name))
+                
+        # Cria propriedades para os landmarks padrão do MediaPipe
+        for landmark in plm:
+            name = landmark.name
+            index = landmark.value
+
+            def make_std_property(idx):
+                return property(lambda self: LandmarkRef(
+                    lambda: self.landmark_list.landmark[idx],
+                    lambda: idx
+                ))
+
+            setattr(cls, name, make_std_property(index))

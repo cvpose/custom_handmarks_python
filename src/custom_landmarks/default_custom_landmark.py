@@ -19,41 +19,41 @@ from custom_landmarks.decorator import point
 
 class DefaultCustomLandmark(CustomLandmark):
     @point("LEFT_RIB")
-    def l_rib(self):
+    def _l_rib(self):
         return self._middle(
             self._landmarks[self._plm.LEFT_HIP.value],
             self._landmarks[self._plm.LEFT_SHOULDER.value],
         )
 
     @point("RIGHT_RIB")
-    def r_rib(self):
+    def _r_rib(self):
         return self._middle(
             self._landmarks[self._plm.RIGHT_HIP.value],
             self._landmarks[self._plm.RIGHT_SHOULDER.value],
         )
 
     @point("MIDDLE_HIP")
-    def m_hip(self):
+    def _m_hip(self):
         return self._middle(
             self._landmarks[self._plm.LEFT_HIP.value],
             self._landmarks[self._plm.RIGHT_HIP.value],
         )
 
     @point("MIDDLE_SHOULDER")
-    def m_shoulder(self):
+    def _m_shoulder(self):
         return self._middle(
             self._landmarks[self._plm.LEFT_SHOULDER.value],
             self._landmarks[self._plm.RIGHT_SHOULDER.value],
         )
 
     @point("NECK")
-    def neck(self):
+    def _neck(self):
         return self._middle(
             self._landmarks[self._plm.NOSE.value], tuple(self.MIDDLE_SHOULDER)
         )
 
     @point("THORAX")
-    def thorax(self):
+    def _thorax(self):
         return self._middle(self.MIDDLE_HIP, self.MIDDLE_SHOULDER)
 
     def _middle(self, p1, p2):
