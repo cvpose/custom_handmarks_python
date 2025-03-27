@@ -97,30 +97,7 @@ Combines landmark extension and dynamic registration into a single concrete impl
 
 ---
 
-### 4. `default_custom_landmark.py`
-
-**Class:** `DefaultCustomLandmark`
-
-#### Purpose:
-Provides a ready-to-use implementation of `CustomLandmark` with predefined virtual points.
-
-#### Usage:
-- Inherit this class or use it directly.
-- Decorate methods with `@point("NAME")` to define virtual landmarks.
-
-#### Example:
-```python
-@point("LEFT_RIB")
-def calc_left_rib(self):
-    return self._middle(self._landmarks[LEFT_HIP], self._landmarks[LEFT_SHOULDER])
-```
-
-#### Idea:
-Acts as a starting point or reference implementation for typical pose landmark extensions. Developers can subclass this to quickly define and use new landmarks.
-
----
-
-### 5. `decorator.py`
+### 4. `decorator.py`
 
 **Function:** `point(name: str)`
 
@@ -136,7 +113,7 @@ Provides a declarative and elegant syntax for defining virtual landmarks. Keeps 
 
 ---
 
-### 6. `landmark_ref.py`
+### 5. `landmark_ref.py`
 
 **Class:** `LandmarkRef`
 
@@ -165,8 +142,7 @@ Unifies access to the landmark coordinates and their index using a single object
 |---------------------------|----------------------------------------------------|-------------------------------------------------------|
 | `AbstractCustomLandmark`  | Manages core landmark list logic                  | Encapsula a estrutura e operações de base do landmark |
 | `CustomLandmarkBase`      | Dynamically registers properties via `@point`     | Cuida da interface dinâmica declarativa               |
-| `CustomLandmark`          | Computes and registers custom landmarks           | Instancia e executa os pontos customizados            |
-| `DefaultCustomLandmark`   | Predefined landmark implementation                | Modelo pronto para extensão e uso                     |
+| `CustomLandmark`          | Computes and registers custom landmarks           | Instancia e executa os pontos customizados  |
 | `@point` Decorator        | Declares a method as a virtual landmark generator | Marca declarativamente pontos virtuais                |
 | `LandmarkRef`             | Access point value and index in unified interface | Interface acessível tipo MediaPipe                    |
 

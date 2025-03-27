@@ -1,10 +1,10 @@
-def point(name: str):
+def landmark(name: str):
     """
     Decorator to register a method as a virtual landmark generator.
 
     When applied to a method, this decorator marks it as a custom landmark
     associated with the given name. During class initialization, all methods
-    decorated with @point(...) will be automatically executed, and their
+    decorated with @landmark(...) will be automatically executed, and their
     results will be added to the landmark list.
 
     The generated landmark will also be accessible via:
@@ -18,7 +18,7 @@ def point(name: str):
         Callable: The original function, tagged with metadata for discovery.
 
     Example:
-        @point("NECK")
+        @landmark("NECK")
         def calc_neck(self):
             return self._middle(
                 self._landmarks[self._plm.LEFT_SHOULDER.value],

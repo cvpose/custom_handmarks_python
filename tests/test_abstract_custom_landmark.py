@@ -69,3 +69,7 @@ def test_add_landmark_invalid_input_raises(fake_landmarks, invalid_point):
     obj = DummyLandmark(fake_landmarks)
     with pytest.raises(ValueError, match="point must be a 3D tuple/list/np.ndarray"):
         obj._add_landmark(invalid_point)
+        
+def test_len_returns_total_landmarks(fake_landmarks):
+    obj = DummyLandmark(fake_landmarks)
+    assert len(obj) == 33  # Apenas os landmarks originais

@@ -3,6 +3,7 @@ config:
   theme: mc
   look: neo
   layout: dagre
+id: fa33bca4-18d1-4462-97f3-fcc4dd687a91
 ---
 classDiagram
 direction LR
@@ -20,21 +21,21 @@ direction LR
     class CustomLandmark {
 	    +_register\_custom\_points()
     }
-    class DefaultCustomLandmark {
-        +NECK
-        +THORAX
-        +LEFT_RIB
-        +RIGHT_RIB
-        +MIDDLE_HIP
-        +MIDDLE_SHOULDER
-        +calc_neck()
-        +calc_thorax()
-        +calc_left_rib()
-        +calc_right_rib()
-        +calc_middle_hip()
-        +calc_middle_shoulder()
-        +\_middle(p1,p2)
-    }
+    %% class DefaultCustomLandmark {
+    %%     +NECK
+    %%     +THORAX
+    %%     +LEFT_RIB
+    %%     +RIGHT_RIB
+    %%     +MIDDLE_HIP
+    %%     +MIDDLE_SHOULDER
+    %%     +calc_neck()
+    %%     +calc_thorax()
+    %%     +calc_left_rib()
+    %%     +calc_right_rib()
+    %%     +calc_middle_hip()
+    %%     +calc_middle_shoulder()
+    %%     +\_middle(p1,p2)
+    %% }
     class LandmarkRef {
 	    +value
 	    +\_\_iter\_\_()
@@ -48,6 +49,6 @@ direction LR
 	<<decorator>> point
     CustomLandmark --|> AbstractCustomLandmark
     CustomLandmark --|> CustomLandmarkBase
-    DefaultCustomLandmark --|> CustomLandmark
+    %% DefaultCustomLandmark --|> CustomLandmark
     CustomLandmarkBase --> LandmarkRef : returns
     CustomLandmark --> point : uses

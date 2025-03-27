@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from custom_landmarks.custom_landmark import CustomLandmark
-from custom_landmarks.decorator import point
+from custom_landmarks.decorator import landmark
 
 
 class DummyCustom(CustomLandmark):
-    @point("CENTER")
+    @landmark("CENTER")
     def center(self):
         return (0.5, 0.5, 0.0)
 

@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import pytest
-from custom_landmarks.decorator import point
+from custom_landmarks.decorator import landmark
 
 def test_point_decorator_adds_metadata():
-    @point("MY_POINT")
+    @landmark("MY_POINT")
     def calc():
         return (0.5, 0.5, 0.0)
 
@@ -33,6 +33,6 @@ def test_point_decorator_adds_metadata():
 ])
 def test_point_decorator_invalid_name_raises(invalid_name):
     with pytest.raises(ValueError, match="Landmark name must be a valid identifier string."):
-        @point(invalid_name)
+        @landmark(invalid_name)
         def fake_fn():
             pass

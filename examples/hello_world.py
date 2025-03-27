@@ -14,9 +14,35 @@
 
 import os
 import cv2
+import numpy as np
 import mediapipe as mp
-from custom_landmarks.default_custom_landmark import DefaultCustomLandmark
+from custom_landmarks import CustomLandmark
+from custom_landmarks import landmark
 
+
+# === Create Custom Landmark class ===
+
+def HelloWorld(CustomLandmark):
+    
+    def _middle(self, p1, p2):
+        p1 = np.ndarray([p1.x, p1.y, p1.z])
+        p2 = np.ndarray([p2.x, p2.y, p2.z])
+        
+        return tuple((p1 + p2) / 2)
+    
+    @landmark("MIDDLE_SHOULDER")
+    def _middle_shoulder(self):
+        return self._middle(self._middle(
+            self._landmarks[self._plm.LEFT_HIP.value],
+            self._landmarks[self._plm.LEFT_SHOULDER.value],
+        ))
+
+    @landmark("NECK")
+    def _neck(self):
+        return self._middle(
+            self._landmarks[self._plm.NOSE.value], tuple(self.MIDDLE_SHOULDER)
+        )
+        
 
 # === Inicializa o modelo do MediaPipe Pose ===
 mp_pose = mp.solutions.pose
