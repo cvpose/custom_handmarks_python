@@ -13,50 +13,95 @@
 # limitations under the License.
 
 from custom_landmarks.abstract_custom_landmark import AbstractCustomLandmark
-from custom_landmarks.custom_landmark_base import CustomLandmarkBase
+from custom_landmarks.virtual_landmark import VirtualLandmark
 
 
-class CustomLandmark(AbstractCustomLandmark, CustomLandmarkBase):
+class CustomLandmark(AbstractCustomLandmark):
     """
     Implementation base class for custom landmark systems.
 
     This class combines the landmark management capabilities from
-    `AbstractCustomLandmark` with the dynamic point registration from
-    `CustomLandmarkBase`. It scans all methods decorated with @point("NAME")
-    and registers their results as virtual landmarks.
+    `AbstractCustomLandmark` with dynamic point registration. It scans all
+    methods decorated with @landmark("NAME") and registers their results
+    as virtual landmarks. Optional connections can also be declared between
+    landmarks.
 
     The resulting object supports access to landmarks via:
-    - `self.LANDMARK_NAME` → returns LandmarkRef with (x, y, z)
     - `self.LANDMARK_NAME.value` → index in the landmark list
+    - `self[self.LANDMARK_NAME.value]` → landmark data (NormalizedLandmark)
+    - `self.virtual_connections` → list of tuple(index, index)
+    - `self.themes[name]` → "left", "right" or "center" based on x-position
     """
 
     def __init__(self, landmarks):
-        """
-        Initializes the custom landmark object.
-
-        Args:
-            landmarks (List[NormalizedLandmark]):
-                List of MediaPipe landmarks to be wrapped and extended.
-        """
         super().__init__(landmarks)
-        self._custom_points = {}         # Dict[str, Tuple[x, y, z]]
-        self._custom_points_index = {}   # Dict[str, int]
-        self._register_custom_points()
+        self._custom_points = {}
+        self._custom_points_index = {}
+        self._themes = {}
+        self._pending_connections = set()
+        self._connections = set()
+        self._deferred_landmark_methods = []
 
-    def _register_custom_points(self):
-        """
-        Scans the current class for methods decorated with @point("NAME"),
-        calls each method to compute the landmark, adds it to the internal list,
-        and registers its index.
+        self._collect_landmark_methods()
+        self._compute_landmark_points()
+        self._validate_and_finalize_connections()
 
-        This method must be called after initialization to populate
-        `_custom_points` and `_custom_points_index`.
-        """
+    def _collect_landmark_methods(self):
         for attr_name in dir(self):
-            method = getattr(self, attr_name)
+            try:
+                method = getattr(self, attr_name)
+            except AttributeError:
+                continue
             if callable(method) and getattr(method, "_is_custom_landmark", False):
-                name = method._landmark_name
-                point = method()
-                index = self._add_landmark(point)
-                self._custom_points[name] = point
-                self._custom_points_index[name] = index
+                self._deferred_landmark_methods.append(method)
+
+    def _compute_landmark_points(self):
+        for method in self._deferred_landmark_methods:
+            name = method._landmark_name
+            point = method()
+            index = len(self.landmark_list.landmark)
+
+            # Cria um VirtualLandmark e adiciona à lista
+            virtual = VirtualLandmark(x=point[0], y=point[1], z=point[2], index=index)
+            # self.landmark_list.landmark.append(virtual)
+            self.landmark_list.landmark.append(virtual.to_protobuf())
+
+            # Armazena referências
+            self._custom_points[name] = virtual
+            self._custom_points_index[name] = index
+            setattr(self, name, virtual)
+
+            # Atribui tema automaticamente com base em x
+            x = point[0]
+            if x < 0.45:
+                theme = "left"
+            elif x > 0.55:
+                theme = "right"
+            else:
+                theme = "center"
+            self._themes[name] = theme
+
+            # Coleta conexões pendentes para validação posterior
+            for target_name in method._landmark_connections:
+                connection = tuple(sorted([name, target_name]))
+                self._pending_connections.add(connection)
+
+    def _validate_and_finalize_connections(self):
+        defined_names = set(self._custom_points_index.keys()) | set(self._plm.__members__.keys())
+        missing = {
+            a if a not in defined_names else b
+            for a, b in self._pending_connections
+            if a not in defined_names or b not in defined_names
+        }
+        if missing:
+            raise ValueError(f"Connection refers to undefined landmark(s): {sorted(missing)}")
+        self._connections = self._pending_connections
+
+    def get_custom_connections(self):
+        return [
+            (getattr(self, a).value, getattr(self, b).value)
+            for a, b in self._connections
+        ]
+        
+    def __getattr__(self, name):
+        return getattr(self.landmark_list, name)

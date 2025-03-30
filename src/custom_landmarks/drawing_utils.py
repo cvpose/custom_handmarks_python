@@ -11,75 +11,90 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import mediapipe as mp
 from typing import List, Tuple
 import matplotlib.pyplot as plt
 from mediapipe.python.solutions.drawing_styles import get_default_pose_landmarks_style
 
-from custom_landmarks.default_custom_landmark import DefaultCustomLandmark
+from custom_landmarks.custom_landmark import CustomLandmark
 
 class CustomConnections:
+    def __init__(self, landmarks: CustomLandmark):
+        print("landmarks:", landmarks)
+        self._landmarks = landmarks
+        print("landmarks:", self._landmarks)
+    
+    @property
+    def CUSTOM_CONNECTION(self):
+        return self._landmarks.get_custom_connections()
+    
+    
+    @property
+    def POSE_CONNECTIONS(self):
+        """
+        Returns the original MediaPipe pose connections.
+
+        These are the predefined anatomical connections used by MediaPipe
+        to link standard pose landmarks (e.g., shoulder to elbow, hip to knee, etc.).
+
+        Returns:
+            List[Tuple[int, int]]: List of index pairs from MediaPipe's POSE_CONNECTIONS.
+        """
+        return list(mp.solutions.pose.POSE_CONNECTIONS)
+
+    @property
+    def ALL_CONNECTIONS(self):
+        """
+        Returns the combined list of all landmark connections.
+
+        This includes both the original MediaPipe pose connections and the
+        custom virtual connections defined via @landmark(..., connection=[...]).
+
+        Returns:
+            List[Tuple[int, int]]: Combined list of MediaPipe and custom landmark connections.
+        """
+        return self._custom_landmark.custom_connections + self.POSE_CONNECTIONS
+
+
+
+def get_extended_pose_landmarks_style(landmarks):
     """
-    Provides access to default MediaPipe pose connections and extended custom connections.
-    """
-
-    # Type alias for readability
-    Connection = Tuple[int, int]
-
-    # Default MediaPipe pose connections
-    POSE_CONNECTIONS: List[Connection] = list(mp.solutions.pose.POSE_CONNECTIONS)
-
-    # Custom virtual connections (must match indices used in CustomLandmarkItem)
-    VIRTUAL_CONNECTIONS: List[Connection] = [
-        # Spine and upper trunk
-        (
-            DefaultCustomLandmark.MIDDLE_HIP.value,
-            DefaultCustomLandmark.MIDDLE_SHOULDER.value,
-        ),  # MIDDLE_HIP → MIDDLE_SHOULDER
-        (
-            DefaultCustomLandmark.MIDDLE_SHOULDER.value,
-            DefaultCustomLandmark.NECK.value,
-        ),  # MIDDLE_SHOULDER → NECK
-        (
-            DefaultCustomLandmark.LEFT_RIB.value,
-            DefaultCustomLandmark.THORAX.value,
-        ),  # LEFT_RIB → THORAX
-        (
-            DefaultCustomLandmark.THORAX.value,
-            DefaultCustomLandmark.RIGHT_RIB.value,
-        ),  # THORAX → RIGHT_RIB
-    ]
-
-    # Combination of all connections
-    ALL_CONNECTIONS: List[Connection] = POSE_CONNECTIONS + VIRTUAL_CONNECTIONS
-
-
-def get_extended_pose_landmarks_style():
-    """
-    Returns a landmark drawing style dict with default MediaPipe styles for real landmarks
-    and custom color-coded styles for virtual landmarks:
+    Returns a landmark drawing style dictionary with:
+    - Default MediaPipe styles for real landmarks (0–32)
+    - Custom color-coded styles for dynamically added landmarks:
         - Orange for left-side points
         - Green for right-side points
         - Gray for center/virtual points
+
+    Args:
+        landmarks (CustomLandmark): An instance of a CustomLandmark or DefaultCustomLandmark
+
+    Returns:
+        Dict[int, DrawingSpec]: Drawing styles for each landmark index
     """
     plm = mp.solutions.pose.PoseLandmark
-
-    # Get base MediaPipe styles (0–32)
     base_style = get_default_pose_landmarks_style()
 
-    side_colors = {
-        "LEFT": base_style[plm.LEFT_SHOULDER.value],
-        "RIGHT": base_style[plm.RIGHT_SHOULDER.value],
-    }
-
+    # Base reference styles (copied, not tupled)
+    left_style = base_style[plm.LEFT_SHOULDER.value]
+    right_style = base_style[plm.RIGHT_SHOULDER.value]
     center_style = base_style[plm.NOSE.value]
 
-    # Loop through virtual landmarks (starting from index 33)
-    for item in CustomLandmarkItem:
-        idx = item.value
-        name = item.name.upper()
+    # Only style custom landmarks (index >= 33)
+    for idx in range(len(plm), len(landmarks)):
+        point = landmarks[idx]
+        x = point.x
 
-        style = next((s for k, s in side_colors.items() if k in name), center_style)
+        style = next(
+            s
+            for cond, s in [
+                (x < 0.45, left_style),
+                (x > 0.55, right_style),
+                (True, center_style),
+            ]
+            if cond
+        )
 
         base_style[idx] = style
 

@@ -14,14 +14,27 @@
 from custom_landmarks.custom_landmark import CustomLandmark
 from custom_landmarks.decorator import landmark
 
+import mediapipe as mp 
+
+PoseLandmark = mp.solutions.pose.PoseLandmark
+
 
 class DummyCustom(CustomLandmark):
-    @landmark("CENTER")
+    @landmark("CENTER", connection=["NECK", PoseLandmark.RIGHT_SHOULDER])
     def center(self):
         return (0.5, 0.5, 0.0)
+    
+    @landmark("NECK")
+    def neck(self):
+         return (0.5, 0.8, 0.0)
 
 
 def test_custom_landmark_registers(fake_landmarks):
     obj = DummyCustom(fake_landmarks)
     assert obj.CENTER.value == len(fake_landmarks)
-    assert list(obj.CENTER) == [0.5, 0.5, 0.0]
+
+    center_point = obj[obj.CENTER.value]
+    assert center_point.x == 0.5
+    assert center_point.y == 0.5
+    assert center_point.z == 0.0
+     

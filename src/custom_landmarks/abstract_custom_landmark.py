@@ -109,17 +109,27 @@ class AbstractCustomLandmark(abc.ABC):
         """
         return iter(self.landmark_list.landmark)
 
-    def __getattr__(self, name):
-        """
-        Fallback attribute access to delegate to the internal landmark list.
+    # def __getattr__(self, name):
+    #     """
+    #     Fallback attribute access to delegate to the internal landmark list.
+    #     Only called if the attribute wasn't found by normal lookup.
 
-        Args:
-            name (str): Attribute name.
+    #     Args:
+    #         name (str): Attribute name.
 
-        Returns:
-            Any: Attribute from the internal `landmark_list`.
+    #     Returns:
+    #         Any: Attribute from the internal `landmark_list`.
 
-        Raises:
-            AttributeError: If the attribute does not exist in `landmark_list`.
-        """
-        return getattr(self.landmark_list, name)
+    #     Raises:
+    #         AttributeError: If the attribute does not exist.
+    #     """
+    #     # Evita chamada recursiva se o atributo não estiver definido
+    #     if name in self.__dict__:
+    #         return self.__dict__[name]
+    #     cls_attr = getattr(type(self), name, None)
+    #     if cls_attr is not None:
+    #         return cls_attr.__get__(self, type(self))  # Suporte a @property
+    #     try:
+    #         return getattr(self.landmark_list, name)
+    #     except AttributeError:
+    #         raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{name}'")

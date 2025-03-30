@@ -19,37 +19,58 @@ import mediapipe as mp
 from custom_landmarks import CustomLandmark
 from custom_landmarks import landmark
 
+import mediapipe as mp
+
+from custom_landmarks.drawing_utils import (
+    CustomConnections,
+    get_extended_pose_landmarks_style,
+)
+
+PoseLandmark = mp.solutions.pose.PoseLandmark
 
 # === Create Custom Landmark class ===
 
-def HelloWorld(CustomLandmark):
-    
-    def _middle(self, p1, p2):
-        p1 = np.ndarray([p1.x, p1.y, p1.z])
-        p2 = np.ndarray([p2.x, p2.y, p2.z])
-        
-        return tuple((p1 + p2) / 2)
-    
-    @landmark("MIDDLE_SHOULDER")
-    def _middle_shoulder(self):
-        return self._middle(self._middle(
-            self._landmarks[self._plm.LEFT_HIP.value],
-            self._landmarks[self._plm.LEFT_SHOULDER.value],
-        ))
 
-    @landmark("NECK")
+class HelloWorld(CustomLandmark):
+    def _middle(self, p1, p2):
+        print(type(p1))
+        print(type(p2))
+        
+        
+        p1 = np.array([p1.x, p1.y, p1.z]) if hasattr(p1, 'x') else np.array(p1)
+        p2 = np.array([p2.x, p2.y, p2.z]) if hasattr(p2, 'x') else np.array(p2)
+        return tuple((p1 + p2) / 2)
+
+    @landmark(
+        "MIDDLE_SHOULDER",
+        connection=[
+            PoseLandmark.RIGHT_SHOULDER,
+            PoseLandmark.LEFT_SHOULDER,
+            "NECK"
+        ],
+    )
+    def _middle_shoulder(self):
+        return self._middle(
+            self._landmarks[PoseLandmark.RIGHT_SHOULDER.value],
+            self._landmarks[PoseLandmark.LEFT_SHOULDER.value],
+        )
+
+    @landmark(
+        "NECK",
+        connection=["MIDDLE_SHOULDER", PoseLandmark.NOSE],
+    )
     def _neck(self):
         return self._middle(
-            self._landmarks[self._plm.NOSE.value], tuple(self.MIDDLE_SHOULDER)
+            self._landmarks[PoseLandmark.NOSE.value],
+            self.MIDDLE_SHOULDER # usa diretamente o ponto como (x, y, z)
         )
-        
+
+
 
 # === Inicializa o modelo do MediaPipe Pose ===
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(
-    static_image_mode=True,
-    model_complexity=2,
-    enable_segmentation=False
+    static_image_mode=True, model_complexity=2, enable_segmentation=False
 )
 
 # === Carrega a imagem ===
@@ -69,15 +90,41 @@ if results.pose_landmarks:
     mp_drawing = mp.solutions.drawing_utils
 
     # Cria objeto de landmarks customizados
-    landmarks = DefaultCustomLandmark(results.pose_landmarks.landmark)
+    landmarks = HelloWorld(results.pose_landmarks.landmark)
 
     # Acessa o ponto virtual NECK usando .value
-    neck_index = landmarks.NECK.value
-    neck_coords = landmarks[neck_index]
+    # neck_index = landmarks.NECK.value
+    # neck_coords = landmarks[neck_index]
 
-    print(f"NECK (index {neck_index}): x={neck_coords.x:.3f}, y={neck_coords.y:.3f}, z={neck_coords.z:.3f}")
+    # print(
+    #     f"NECK (index {neck_index}): x={neck_coords.x:.3f}, y={neck_coords.y:.3f}, z={neck_coords.z:.3f}"
+    # )
+
+    cc = CustomConnections(landmarks)
+    print(cc.CUSTOM_CONNECTION)
+
+    mp_drawing = mp.solutions.drawing_utils
+
+    img_copy = image.copy()
+    mp_drawing.draw_landmarks(
+        image=img_copy,
+        landmark_list=landmarks,  # results.pose_landmarks,
+        connections=CustomConnections(
+            landmarks
+        ).ALL_CONNECTIONS,  # mp_pose.POSE_CONNECTIONS,
+        landmark_drawing_spec=get_extended_pose_landmarks_style(),
+        connection_drawing_spec=mp_drawing.DrawingSpec(
+            color=(255, 255, 255), thickness=1
+        ),
+    )
+
+    cv2.imshow("Extended Landmarks", img_copy)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
 else:
     print("No landmarks detected in the image.")
+
 
 # === Libera recursos ===
 pose.close()
