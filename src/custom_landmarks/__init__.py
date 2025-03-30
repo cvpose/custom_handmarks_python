@@ -1,7 +1,11 @@
-from .custom_landmark import CustomLandmark
+from .virtual_pose_landmark import VirtualPoseLandmark
+from .virtual_landmark import VirtualLandmark
 from .decorator import landmark
+from . import trigonometry
 
 __ALL__ =[
-    "CustomLandmark",
+    "VirtualPoseLandmark"
+    "VirtualLandmark",
+    "trigonometry"
     "landmark"
 ]

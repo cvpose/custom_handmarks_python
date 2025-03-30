@@ -12,39 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from mediapipe.framework.formats.landmark_pb2 import NormalizedLandmark
+from custom_landmarks.abstract_landmark import AbstractLandmark
 
 
-class VirtualLandmark:
+class VirtualLandmark(AbstractLandmark):
     """
-    Wrapper para NormalizedLandmark com suporte a .value (índice) e acesso direto a x, y, z.
+    Concrete class that automatically detects and registers virtual landmarks
+    defined using the @landmark decorator. Each method returns a 3D point and
+    may declare connections to other landmarks.
 
-    Esse objeto funciona como um landmark normal (x, y, z, visibility),
-    mas adiciona o atributo `.value` para uso como enum dinâmico.
+    It extends AbstractLandmark and supports:
+    - Dynamic landmark creation
+    - Automatic connection registration
     """
 
-    def __init__(self, x: float, y: float, z: float, index: int):
-        self._landmark = NormalizedLandmark(x=x, y=y, z=z, visibility=1.0)
-        self.value = index
+    def __init__(self, landmarks):
+        super().__init__(landmarks)
+        self._process_virtual_landmarks()
 
+    def _process_virtual_landmarks(self):
+        """
+        Scans the class for methods decorated with @landmark, executes them to
+        get the 3D points, and registers them using _add_landmark and _add_connection.
+        """
+        for attr_name in dir(self):
+            method = getattr(self, attr_name)
+            if callable(method) and getattr(method, "_is_custom_landmark", False):
+                name = method._landmark_name
+                connections = method._landmark_connections
+
+                point = method()
+                self._add_landmark(name, point)
+                self._add_connection(name, connections)
+                
     @property
-    def x(self): return self._landmark.x
-    @property
-    def y(self): return self._landmark.y
-    @property
-    def z(self): return self._landmark.z
-    @property
-    def visibility(self): return self._landmark.visibility
-
-    def __iter__(self):
-        return iter((self.x, self.y, self.z))
-
-    def __getitem__(self, index):
-        return (self.x, self.y, self.z)[index]
-
-    def __repr__(self):
-        return f"<VirtualLandmark value={self.value}, x={self.x:.2f}, y={self.y:.2f}, z={self.z:.2f}>"
-
-    def to_protobuf(self):
-        """Retorna a instância real de NormalizedLandmark."""
-        return self._landmark
+    def virtual_landmark(self):
+        return self._virtual_landmark

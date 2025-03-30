@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from custom_landmarks.custom_landmark import CustomLandmark
+from custom_landmarks.virtual_landmark import VirtualLandmark
 from custom_landmarks.decorator import landmark
 
 import mediapipe as mp 
@@ -19,7 +19,7 @@ import mediapipe as mp
 PoseLandmark = mp.solutions.pose.PoseLandmark
 
 
-class DummyCustom(CustomLandmark):
+class DummyCustom(VirtualLandmark):
     @landmark("CENTER", connection=["NECK", PoseLandmark.RIGHT_SHOULDER])
     def center(self):
         return (0.5, 0.5, 0.0)

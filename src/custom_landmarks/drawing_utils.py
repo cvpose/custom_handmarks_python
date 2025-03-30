@@ -17,17 +17,18 @@ from typing import List, Tuple
 import matplotlib.pyplot as plt
 from mediapipe.python.solutions.drawing_styles import get_default_pose_landmarks_style
 
-from custom_landmarks.custom_landmark import CustomLandmark
+from custom_landmarks.virtual_landmark import VirtualLandmark
 
-class CustomConnections:
-    def __init__(self, landmarks: CustomLandmark):
-        print("landmarks:", landmarks)
-        self._landmarks = landmarks
-        print("landmarks:", self._landmarks)
-    
+class Connections:
+    def __init__(self, landmarks: VirtualLandmark):
+        connections = getattr(landmarks, '_connections')
+        vl = landmarks.virtual_landmark
+        
+        self._connections = [(vl[x1], vl[x2]) for x1, x2 in connections]
+        
     @property
     def CUSTOM_CONNECTION(self):
-        return self._landmarks.get_custom_connections()
+        return list(self._connections)
     
     
     @property
@@ -54,7 +55,7 @@ class CustomConnections:
         Returns:
             List[Tuple[int, int]]: Combined list of MediaPipe and custom landmark connections.
         """
-        return self._custom_landmark.custom_connections + self.POSE_CONNECTIONS
+        return  self.POSE_CONNECTIONS + self.CUSTOM_CONNECTION
 
 
 
@@ -89,8 +90,8 @@ def get_extended_pose_landmarks_style(landmarks):
         style = next(
             s
             for cond, s in [
-                (x < 0.45, left_style),
-                (x > 0.55, right_style),
+                (x < 0.45, right_style),
+                (x > 0.55, left_style),
                 (True, center_style),
             ]
             if cond

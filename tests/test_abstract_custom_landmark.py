@@ -13,10 +13,10 @@
 # limitations under the License.
 import pytest
 from mediapipe.framework.formats import landmark_pb2
-from custom_landmarks.abstract_custom_landmark import AbstractCustomLandmark
+from custom_landmarks.abstract_landmark import AbstractLandmark
 
 
-class DummyLandmark(AbstractCustomLandmark):
+class DummyLandmark(AbstractLandmark):
     pass
 
 

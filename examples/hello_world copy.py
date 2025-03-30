@@ -29,17 +29,25 @@ from custom_landmarks.drawing_utils import (
 PoseLandmark = mp.solutions.pose.PoseLandmark
 
 from mediapipe.python.solutions.drawing_styles import get_default_pose_landmarks_style
-from custom_landmarks import trigonometry as tg
+
 # === Create Custom Landmark class ===
 
 
 class HelloWorld(VirtualLandmark):
+    def _middle(self, p1, p2):
+        print(type(p1))
+        print(type(p2))
+
+        p1 = np.array([p1.x, p1.y, p1.z]) if hasattr(p1, "x") else np.array(p1)
+        p2 = np.array([p2.x, p2.y, p2.z]) if hasattr(p2, "x") else np.array(p2)
+        return tuple((p1 + p2) / 2)
+
     @landmark(
         "MIDDLE_SHOULDER",
         connection=["RIGHT_SHOULDER", "LEFT_SHOULDER", "NECK"],
     )
     def _middle_shoulder(self):
-        return tg.middle(
+        return self._middle(
             self[self.virtual_landmark.RIGHT_SHOULDER],
             self[self.virtual_landmark.LEFT_SHOULDER],
         )
@@ -49,19 +57,24 @@ class HelloWorld(VirtualLandmark):
         connection=["MIDDLE_SHOULDER", "NOSE"],
     )
     def _neck(self):
-        return tg.middle(
+        return self._middle(
             self[self.virtual_landmark.NOSE],
             self[self.virtual_landmark.MIDDLE_SHOULDER],
         )
-
-    @landmark("PROJECTION")
-    def _norm(self):
-        return tg.project_point_on_line(
+    
+    @landmark("LEFT_RIB")
+    def _left_rib(self):
+        return self._middle(
             self[self.virtual_landmark.LEFT_HIP],
-            self[self.virtual_landmark.LEFT_KNEE],
-            self[self.virtual_landmark.LEFT_SHOULDER]
+            self[self.virtual_landmark.LEFT_SHOULDER],
         )
-
+        
+    @landmark("RIGHT_RIB")
+    def _right_rib(self):
+        return self._middle(
+            self[self.virtual_landmark.RIGHT_HIP],
+            self[self.virtual_landmark.RIGHT_SHOULDER],
+        )
 
 
 # === Inicializa o modelo do MediaPipe Pose ===
