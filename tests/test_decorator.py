@@ -11,28 +11,88 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import pytest
-from custom_landmarks.decorator import landmark
+from virtual_landmark import landmark
 
-def test_point_decorator_adds_metadata():
-    @landmark("MY_POINT")
+
+def test_landmark_decorator_assigns_attributes():
+    @landmark("TEST_POINT", connection=["A", "B"])
+    def dummy_method():
+        return (0.0, 0.0, 0.0)
+
+    assert dummy_method._is_custom_landmark is True
+    assert dummy_method._landmark_name == "TEST_POINT"
+    assert dummy_method._landmark_connections == ["A", "B"]
+
+
+def test_landmark_decorator_accepts_enum_like_objects():
+    class FakeEnum:
+        def __init__(self, name):
+            self.name = name
+
+    left = FakeEnum("LEFT_EAR")
+    right = FakeEnum("RIGHT_EAR")
+
+    @landmark("HEAD_CENTER", connection=[left, right])
     def calc():
-        return (0.5, 0.5, 0.0)
+        return (0.5, 0.5, 0.5)
 
-    assert hasattr(calc, "_is_custom_landmark")
-    assert hasattr(calc, "_landmark_name")
-    assert calc._landmark_name == "MY_POINT"
-    
-@pytest.mark.parametrize("invalid_name", [
-    None,
-    123,
-    "123invalid",
-    "with space",
-    "special-char!",
-    "",
-])
-def test_point_decorator_invalid_name_raises(invalid_name):
-    with pytest.raises(ValueError, match="Landmark name must be a valid identifier string."):
-        @landmark(invalid_name)
-        def fake_fn():
-            pass
+    assert calc._landmark_connections == ["LEFT_EAR", "RIGHT_EAR"]
+
+
+def test_landmark_decorator_rejects_invalid_name_type():
+    with pytest.raises(ValueError, match="valid identifier string"):
+        landmark(123)
+
+
+def test_landmark_decorator_rejects_invalid_name_string():
+    with pytest.raises(ValueError, match="valid identifier string"):
+        landmark("123ABC")
+
+        
+def test_decorator_skips_connection_block_when_none():
+    @landmark("SKIP_CONNECTION")
+    def f():
+        return (0.0, 0.0, 0.0)
+
+    assert f._landmark_connections == []
+
+
+def test_decorator_accepts_all_strings_in_connection():
+    @landmark("STRINGS_ONLY", connection=["A", "B", "C"])
+    def f():
+        return (0.0, 0.0, 0.0)
+
+    assert f._landmark_connections == ["A", "B", "C"]
+
+
+def test_decorator_accepts_enum_like_objects_in_connection():
+    class FakeEnum:
+        def __init__(self, name):
+            self.name = name
+
+    @landmark("ENUM_LIKE", connection=[FakeEnum("LEFT"), FakeEnum("RIGHT")])
+    def f():
+        return (0.0, 0.0, 0.0)
+
+    assert f._landmark_connections == ["LEFT", "RIGHT"]
+
+
+def test_decorator_accepts_mixed_string_and_enum_like():
+    class FakeEnum:
+        def __init__(self, name):
+            self.name = name
+
+    @landmark("MIXED", connection=["CENTER", FakeEnum("EDGE")])
+    def f():
+        return (0.0, 0.0, 0.0)
+
+    assert f._landmark_connections == ["CENTER", "EDGE"]
+
+
+def test_decorator_raises_on_invalid_connection_type():
+    with pytest.raises(ValueError, match="Invalid connection value"):
+        @landmark("BAD_CONNECTION", connection=[123])
+        def f():
+            return (0.0, 0.0, 0.0)

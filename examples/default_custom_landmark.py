@@ -13,11 +13,11 @@
 # limitations under the License.
 import numpy as np
 
-from custom_landmarks.custom_landmark import CustomLandmark
+from custom_landmarks.virtual_landmark import VirtualLandmark
 from custom_landmarks.decorator import landmark
 
 
-class DefaultCustomLandmark(CustomLandmark):
+class DefaultCustomLandmark(VirtualLandmark):
     @landmark("LEFT_RIB")
     def _l_rib(self):
         return self._middle(

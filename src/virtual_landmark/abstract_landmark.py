@@ -17,8 +17,10 @@ import numpy as np
 import mediapipe as mp
 from mediapipe.framework.formats import landmark_pb2
 
+from .virtual_pose_landmark import VirtualPoseLandmark
 
-class AbstractCustomLandmark(abc.ABC):
+
+class AbstractLandmark(abc.ABC):
     """
     Abstract class that encapsulates MediaPipe pose landmarks and allows
     adding virtual (custom) landmarks while maintaining compatibility with 
@@ -29,8 +31,6 @@ class AbstractCustomLandmark(abc.ABC):
     that compute and register additional landmarks dynamically.
 
     Attributes:
-        _plm (PoseLandmark): Shortcut to MediaPipe's PoseLandmark enum.
-        _landmarks (List[NormalizedLandmark]): Original list of landmarks.
         landmark_list (NormalizedLandmarkList): Combined list of original and added landmarks.
     """
 
@@ -41,12 +41,14 @@ class AbstractCustomLandmark(abc.ABC):
         Args:
             landmarks (List[NormalizedLandmark]): List of landmarks from MediaPipe's pose estimation.
         """
-        self._plm = mp.solutions.pose.PoseLandmark
-        self._landmarks = landmarks
-        self.landmark_list = landmark_pb2.NormalizedLandmarkList()
-        self.landmark_list.landmark.extend(landmarks)
+        self._landmark_list = landmark_pb2.NormalizedLandmarkList()
+        self._landmark_list.landmark.extend(landmarks)
 
-    def _add_landmark(self, point):
+        self._virtual_landmark = VirtualPoseLandmark()
+
+        self._connections = set()
+
+    def _add_landmark(self, name: str, point):
         """
         Adds a new virtual landmark to the landmark list.
 
@@ -66,9 +68,26 @@ class AbstractCustomLandmark(abc.ABC):
         lm = landmark_pb2.NormalizedLandmark()
         lm.x, lm.y, lm.z = float(point[0]), float(point[1]), float(point[2])
         lm.visibility = 1.0
-        self.landmark_list.landmark.append(lm)
+        self._landmark_list.landmark.append(lm)
 
-        return len(self.landmark_list.landmark) - 1
+        idx = len(self._landmark_list.landmark) - 1
+
+        self._virtual_landmark[name] = idx
+
+        return idx
+
+    def _add_connection(self, name: str, targets: list):
+        """
+        Adds connections between a landmark and a list of other landmarks.
+
+        Args:
+            name (str): The base landmark name.
+            targets (List[Union[str, Enum]]): List of target landmark names or enums.
+        """
+        for target in targets:
+            a = name
+            b = target.name if hasattr(target, "name") else target
+            self._connections.add(tuple(sorted((a, b))))
 
     def as_landmark_list(self):
         """
@@ -77,7 +96,7 @@ class AbstractCustomLandmark(abc.ABC):
         Returns:
             NormalizedLandmarkList: Combined list of original and custom landmarks.
         """
-        return self.landmark_list
+        return self._landmark_list
 
     def __getitem__(self, idx):
         """
@@ -89,7 +108,7 @@ class AbstractCustomLandmark(abc.ABC):
         Returns:
             NormalizedLandmark: Landmark at the given index.
         """
-        return self.landmark_list.landmark[idx]
+        return self._landmark_list.landmark[idx]
 
     def __len__(self):
         """
@@ -98,7 +117,7 @@ class AbstractCustomLandmark(abc.ABC):
         Returns:
             int: Count of all landmarks (original + custom).
         """
-        return len(self.landmark_list.landmark)
+        return len(self._landmark_list.landmark)
 
     def __iter__(self):
         """
@@ -107,19 +126,29 @@ class AbstractCustomLandmark(abc.ABC):
         Returns:
             Iterator[NormalizedLandmark]: An iterator over all landmarks.
         """
-        return iter(self.landmark_list.landmark)
-
-    def __getattr__(self, name):
+        return iter(self._landmark_list.landmark)
+    
+    def __contains__(self, index: int) -> bool:
         """
-        Fallback attribute access to delegate to the internal landmark list.
+        Checks whether a landmark index is within the bounds of the list.
 
         Args:
-            name (str): Attribute name.
+            index (int): Index to check.
 
         Returns:
-            Any: Attribute from the internal `landmark_list`.
-
-        Raises:
-            AttributeError: If the attribute does not exist in `landmark_list`.
+            bool: True if the index exists, False otherwise.
         """
-        return getattr(self.landmark_list, name)
+        return 0 <= index < len(self)
+
+    def __repr__(self):
+        """
+        Returns a string representation showing number of landmarks and connections.
+
+        Returns:
+            str: Descriptive string of the VirtualLandmark object.
+        """
+        return (
+            f"<VirtualLandmark landmarks={len(self)} "
+            f"custom={len(self._virtual_landmark) - 33} "
+            f"connections={len(self._connections)}>"
+        )

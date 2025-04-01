@@ -1,5 +1,5 @@
 [project]
-name = "custom_landmarks"
+name = "virtual_landmark"
 version = "0.0.1"
 authors = [
   { name = "Denys G. Santos", email = "gsdenys@gmail.com" },
@@ -44,7 +44,7 @@ Source = "https://github.com/cvpose/custom_handmarks_python"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=custom_landmarks --cov-report=term-missing --cov-report=html -p no:warnings"
+addopts = "--cov=virtual_landmark --cov-report=term-missing --cov-report=html -p no:warnings"
 testpaths = [
     "tests"
 ]
@@ -53,7 +53,7 @@ testpaths = [
 [tool.coverage.run]
 branch = true
 source = [
-    "src/custom_landmarks"
+    "src/virtual_landmark"
 ]
 
 [tool.coverage.report]
