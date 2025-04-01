@@ -11,8 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from custom_landmarks.virtual_landmark import VirtualLandmark
-from custom_landmarks.decorator import landmark
+
+from virtual_landmark import VirtualLandmark
+from virtual_landmark import landmark
 
 import mediapipe as mp 
 

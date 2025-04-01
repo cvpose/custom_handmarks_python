@@ -16,12 +16,12 @@ import os
 import cv2
 import numpy as np
 import mediapipe as mp
-from custom_landmarks import VirtualLandmark
-from custom_landmarks import landmark
+from virtual_landmark import VirtualLandmark
+from virtual_landmark import landmark
 
 import mediapipe as mp
 
-from custom_landmarks.drawing_utils import (
+from virtual_landmark.drawing_utils import (
     Connections,
     get_extended_pose_landmarks_style,
 )
@@ -29,7 +29,7 @@ from custom_landmarks.drawing_utils import (
 PoseLandmark = mp.solutions.pose.PoseLandmark
 
 from mediapipe.python.solutions.drawing_styles import get_default_pose_landmarks_style
-from custom_landmarks import trigonometry as tg
+from virtual_landmark import calculus as tg
 # === Create Custom Landmark class ===
 
 

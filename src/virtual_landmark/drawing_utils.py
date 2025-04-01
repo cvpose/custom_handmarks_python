@@ -17,7 +17,7 @@ from typing import List, Tuple
 import matplotlib.pyplot as plt
 from mediapipe.python.solutions.drawing_styles import get_default_pose_landmarks_style
 
-from custom_landmarks.virtual_landmark import VirtualLandmark
+from .virtual_landmark import VirtualLandmark
 
 class Connections:
     def __init__(self, landmarks: VirtualLandmark):

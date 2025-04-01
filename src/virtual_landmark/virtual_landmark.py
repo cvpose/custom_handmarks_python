@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from custom_landmarks.abstract_landmark import AbstractLandmark
+from .abstract_landmark import AbstractLandmark
 
 
 class VirtualLandmark(AbstractLandmark):
