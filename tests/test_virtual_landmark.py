@@ -31,9 +31,11 @@ class DummyCustom(VirtualLandmark):
 
 def test_custom_landmark_registers(fake_landmarks):
     obj = DummyCustom(fake_landmarks)
-    assert obj.CENTER.value == len(fake_landmarks)
+    vl = obj.virtual_landmark
+    
+    assert vl.CENTER == len(fake_landmarks)
 
-    center_point = obj[obj.CENTER.value]
+    center_point = obj[vl.CENTER]
     assert center_point.x == 0.5
     assert center_point.y == 0.5
     assert center_point.z == 0.0
