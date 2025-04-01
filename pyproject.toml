@@ -37,10 +37,10 @@ dev = ["pytest", "black", "ruff", "mypy"]
 docs = ["mkdocs", "mkdocs-material"]
 
 [project.urls]
-Homepage = "https://github.com/cvpose/custom_handmarks_python"
-Documentation = "https://github.com/cvpose/custom_handmarks_python/wiki"
-Issues = "https://github.com/cvpose/custom_handmarks_python/issues"
-Source = "https://github.com/cvpose/custom_handmarks_python"
+Homepage = "https://github.com/cvpose/virtual_handmark_python"
+Documentation = "https://github.com/cvpose/virtual_handmark_python/wiki"
+Issues = "https://github.com/cvpose/virtual_handmark_python/issues"
+Source = "https://github.com/cvpose/virtual_handmark_python"
 
 [tool.pytest.ini_options]
 minversion = "6.0"

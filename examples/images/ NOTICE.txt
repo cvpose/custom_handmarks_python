@@ -1,0 +1,11 @@
+All images contained in this directory were generated using artificial intelligence (AI) tools.
+
+No real persons were photographed or depicted, and no copyrighted visual material was used or reproduced in the generation of these assets.
+
+These images are considered synthetic assets created as part of the software development process and are intended solely for illustrative, technical, or demonstrative purposes related to this project.
+
+Accordingly, all such images are subject to the same license as the source code of this repository: the Apache License, Version 2.0.
+
+For more information on the terms of this license, see the root LICENSE file or visit:
+
+    http://www.apache.org/licenses/LICENSE-2.0
