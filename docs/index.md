@@ -41,13 +41,11 @@ git clone https://github.com/cvpose/virtual_landmark_python.git
 cd virtual_landmark_python
 ```
 
-If your code uses the library as a module:
+{: .note }
+If your code uses the library as a module execute this before execute the examples: export PYTHONPATH=$(pwd)
 
-```bash
-export PYTHONPATH=$(pwd)
-```
 
-Now you can run the included Hello World:
+So run the included Hello World:
 
 ```bash
 python examples/hello_world.py
@@ -55,6 +53,7 @@ python examples/hello_world.py
 
 This script loads an image, runs pose detection, and overlays both default and virtual landmarks. For step by step guide go to [Usage page](usage.md)
 
+---
 
 ## About the Project
 
