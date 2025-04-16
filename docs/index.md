@@ -41,8 +41,8 @@ git clone https://github.com/cvpose/virtual_landmark_python.git
 cd virtual_landmark_python
 ```
 
-{: .note }
 If your code uses the library as a module execute this before execute the examples: export PYTHONPATH=$(pwd)
+{: .note }
 
 
 So run the included Hello World:
