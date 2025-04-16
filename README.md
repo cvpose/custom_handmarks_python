@@ -5,7 +5,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 - 🧩 Create virtual landmarks with `@landmark` decorator
 - 📐 Measure 2D and 3D joint angles
@@ -16,7 +16,7 @@
 
 ---
 
-## 🗂 Project Structure
+## Project Structure
 
 ```
 virtual_landmark
@@ -32,7 +32,7 @@ virtual_landmark
 
 ---
 
-## ⚙️ How It Works
+## How It Works
 
 The system works in three stages:
 
@@ -50,15 +50,15 @@ Virtual landmarks behave like native landmarks:
 
 ---
 
-## 🖼 Diagram
+## Diagram
 
-![Class Diagram](./diagrams/class.png)
+![Class Diagram](./docs/diagrams/class.png)
 
 See the full [architecture documentation](./landmark_architecture.md) for more details.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Install MediaPipe:
 
@@ -84,12 +84,12 @@ jupyter lab examples
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [Apache License 2.0](./LICENSE).
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to fork the repository and submit a pull request.
