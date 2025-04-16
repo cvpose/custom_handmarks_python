@@ -1,0 +1,21 @@
+site_name: Virtual Landmark
+site_description: Extend MediaPipe with virtual landmarks and custom pose points
+site_author: cvpose team
+repo_url: https://github.com/cvpose/virtual_landmark_python
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: teal
+    accent: cyan
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - toc.integrate
+
+nav:
+  - Home: index.md
+  - Architecture: landmark_architecture.md
+  - How to Create Virtual Landmarks: how_to_create_virtual_landmarks.md
+  - How to Register Connections: how_to_register_connections.md
+  - How to Access Landmarks: how_to_access_landmarks.md
