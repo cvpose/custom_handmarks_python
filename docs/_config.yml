@@ -1,12 +1,8 @@
 title: Virtual Landmark
 description: Documentation for the virtual landmark extension system based on MediaPipe.
-theme: minima
-markdown: kramdown
-baseurl: "" # No subpath
-url: ""      # GitHub Pages will auto-detect
+remote_theme: just-the-docs/just-the-docs
+search_enabled: true
+color_scheme: light
 
-# Optional settings
-permalink: pretty
-exclude:
-  - Gemfile
-  - Gemfile.lock
+# Optional: repo link
+repository_url: https://github.com/cvpose/virtual_landmark_python
