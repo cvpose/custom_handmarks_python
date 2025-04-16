@@ -20,6 +20,10 @@ The virtual_landmark_python system enables the dynamic generation of new pose la
 
 In addition to structural expansion, the library provides an intuitive interface for accessing both original and extended landmarks by name, promoting clarity and consistency in code. These landmarks are fully compatible with MediaPipe’s native rendering tools and export workflows, allowing for immediate visualization and deployment. Furthermore, the framework supports the development of modular, pose-driven logic through a clean, extensible API that encourages reuse, experimentation, and integration with machine learning pipelines.
 
+The visual comparison below demonstrates the evolution from the default MediaPipe landmarks to an enriched virtual structure. The left image shows the standard pose connections, the center highlights custom virtual landmarks defined using this system, and the right image presents the combined result with both native and extended landmarks rendered together for full-body analysis.
+
+![comparation](./images/landmarks.png)
+
 ---
 
 ## Getting started
