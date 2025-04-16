@@ -41,14 +41,6 @@ git clone https://github.com/cvpose/virtual_landmark_python.git
 cd virtual_landmark_python
 ```
 
-> #### Note
-> If your code uses the library as a module, execute the following before running the examples:
->
-> ```bash
-> export PYTHONPATH=$(pwd)
-> ```
-
-
 So run the included Hello World:
 
 ```bash
