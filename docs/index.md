@@ -41,8 +41,11 @@ git clone https://github.com/cvpose/virtual_landmark_python.git
 cd virtual_landmark_python
 ```
 
-If your code uses the library as a module execute this before execute the examples: export PYTHONPATH=$(pwd)
-{: .note }
+<div class="note">
+<p>If your code uses the library as a module, execute this before running the examples:</p>
+
+<pre><code>export PYTHONPATH=$(pwd)</code></pre>
+</div>
 
 
 So run the included Hello World:
