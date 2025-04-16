@@ -1,4 +1,8 @@
-
+---
+title: Create Virtual Landmarks
+nav_order: 1
+parent: Guide
+---
 # Create Your Own Virtual Landmarks
 
 This section shows how to define **custom pose points** using the `@landmark` decorator provided by `virtual_landmark_python`.

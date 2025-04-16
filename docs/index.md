@@ -1,4 +1,8 @@
-# Welcome to virtual_landmark_python 👋
+---
+title: Home
+nav_order: 1
+---
+# Welcome to virtual_landmark_python
 
 **virtual_landmark_python** is a Python module for extending [MediaPipe Pose](https://google.github.io/mediapipe/solutions/pose.html) with **custom virtual landmarks**. It allows you to define new body points geometrically (e.g., midpoints, projections, bisectors) and integrate them seamlessly into the MediaPipe pipeline.
 

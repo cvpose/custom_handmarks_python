@@ -1,5 +1,9 @@
-
-# How to Access Landmarks by Name or Index
+---
+title: Access Landmarks
+nav_order: 2
+parent: Guide
+---
+# Access Landmarks
 
 Once you've defined and registered virtual landmarks using `virtual_landmark_python`, you can access them similarly to MediaPipe landmarks—either by **name** (via a registered string) or by **index** (to access the actual 3D point).
 

@@ -1,5 +1,9 @@
-
-# How to Register Custom Connections
+---
+title: Register Custom Connections
+nav_order: 3
+parent: Guide
+---
+# Register Custom Connections
 
 Once you've defined your own virtual landmarks, you may want to **visually connect** them to existing pose landmarks (or to each other). This allows you to extend MediaPipe's pose skeleton with meaningful new edges.
 
