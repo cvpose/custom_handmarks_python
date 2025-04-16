@@ -1,5 +1,5 @@
 ---
-title: Usage
+title: Architectural Overview
 nav_order: 2
 has_children: false
 ---

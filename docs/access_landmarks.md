@@ -1,7 +1,7 @@
 ---
 title: Access Landmarks
 nav_order: 2
-parent: Guide
+parent: Usage
 ---
 # Access Landmarks
 

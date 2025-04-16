@@ -1,7 +1,7 @@
 ---
 title: Register Custom Connections
 nav_order: 3
-parent: Guide
+parent: Usage
 ---
 # Register Custom Connections
 

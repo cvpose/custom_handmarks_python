@@ -1,7 +1,7 @@
 ---
 title: Create Virtual Landmarks
 nav_order: 1
-parent: Guide
+parent: Usage
 ---
 # Create Your Own Virtual Landmarks
 
