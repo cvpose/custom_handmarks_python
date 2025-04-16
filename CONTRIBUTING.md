@@ -5,7 +5,7 @@ We welcome contributions of all kinds, including bug reports, documentation impr
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 To contribute:
 
