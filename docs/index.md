@@ -12,7 +12,7 @@ Extend [MediaPipe Pose](https://google.github.io/mediapipe/solutions/pose.html) 
 {: .fs-6 .fw-300 }
 
 [Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
-[View it on GitHub][https://github.com/cvpose/virtual_landmark_python]{: .btn .fs-5 .mb-4 .mb-md-0 }
+[View it on GitHub](https://github.com/cvpose/virtual_landmark_python){: .btn .fs-5 .mb-4 .mb-md-0 }
 ---
 
 ## What This Library Does
