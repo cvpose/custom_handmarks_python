@@ -13,26 +13,12 @@ Extend [MediaPipe Pose](https://google.github.io/mediapipe/solutions/pose.html) 
 
 [Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
 [View it on GitHub](https://github.com/cvpose/virtual_landmark_python){: .btn .fs-5 .mb-4 .mb-md-0 }
----
-
-## What This Library Does
-
-- 🧩 Dynamically generate new pose landmarks
-- 🔗 Connect virtual points to the original pose structure
-- 🧠 Access all landmarks with intuitive names
-- 🛠 Integrate with MediaPipe’s rendering and data export
-- 🧪 Build pose-based logic using clean and extendable interfaces
 
 ---
 
-## Documentation Structure
+The virtual_landmark_python system enables the dynamic generation of new pose landmarks derived from geometric relationships within the human body. These virtual points are seamlessly integrated into the existing MediaPipe pose structure, allowing developers to expand the landmark topology without altering the base model. This integration supports both spatial reasoning and high-level abstraction by embedding custom points—such as midpoints, projections, or anatomical estimates—directly into the landmark list.
 
-You’ll find detailed documentation on:
-
-- ✅ [How the system works](./landmark_architecture.md)
-- 📐 [How to create your own virtual points](create_virtual_landmarks.md)
-- 🔄 [How to register connections](how_to_register_connections.md)
-- 📊 [How to access landmarks](how_to_access_landmarks.md)
+In addition to structural expansion, the library provides an intuitive interface for accessing both original and extended landmarks by name, promoting clarity and consistency in code. These landmarks are fully compatible with MediaPipe’s native rendering tools and export workflows, allowing for immediate visualization and deployment. Furthermore, the framework supports the development of modular, pose-driven logic through a clean, extensible API that encourages reuse, experimentation, and integration with machine learning pipelines.
 
 ---
 
