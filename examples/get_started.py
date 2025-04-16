@@ -92,14 +92,10 @@ def main():
         connections = Connections(vl)
 
         # Print useful debugging or summary info
-        print("Landmarks processed successfully.")
-        print("Custom landmarks:", list(vpl.keys()))
-        print("Custom connections:", connections.ALL_CONNECTIONS)
+        print("\n\n", f"{'='*5} Landmarks processed successfully {'='*5}")
+        print("\nCustom landmarks:\n", list(vpl.keys()))
+        print("\nCustom connections:\n", connections.ALL_CONNECTIONS)
 
-
-# =======================
-# ENTRY POINT
-# =======================
 
 if __name__ == "__main__":
     main()

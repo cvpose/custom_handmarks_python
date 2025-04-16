@@ -3,52 +3,77 @@ config:
   theme: mc
   look: neo
   layout: dagre
-id: fa33bca4-18d1-4462-97f3-fcc4dd687a91
 ---
 classDiagram
-direction LR
-    class AbstractCustomLandmark {
-        +\_\_len\_\_()
-        +\_\_iter\_\_()
-        +\_\_getattr\_\_()
-        +\_\_getitem\_\_(idx)
-	    +\_add\_landmark()
-	    +as_landmark_list()
-    }
-    class CustomLandmarkBase {
-	    +\_\_init\_subclass\_\_(cls,**kwargs)
-    }
-    class CustomLandmark {
-	    +_register\_custom\_points()
-    }
-    %% class DefaultCustomLandmark {
-    %%     +NECK
-    %%     +THORAX
-    %%     +LEFT_RIB
-    %%     +RIGHT_RIB
-    %%     +MIDDLE_HIP
-    %%     +MIDDLE_SHOULDER
-    %%     +calc_neck()
-    %%     +calc_thorax()
-    %%     +calc_left_rib()
-    %%     +calc_right_rib()
-    %%     +calc_middle_hip()
-    %%     +calc_middle_shoulder()
-    %%     +\_middle(p1,p2)
-    %% }
-    class LandmarkRef {
-	    +value
-	    +\_\_iter\_\_()
-        +\_\_repr\_\_()
-	    +\_\_getitem\_\_(idx)
-    }
-    class point {
-        +wrapper(fn)
-    }
-	<<Mixin>> CustomLandmarkBase
-	<<decorator>> point
-    CustomLandmark --|> AbstractCustomLandmark
-    CustomLandmark --|> CustomLandmarkBase
-    %% DefaultCustomLandmark --|> CustomLandmark
-    CustomLandmarkBase --> LandmarkRef : returns
-    CustomLandmark --> point : uses
+direction TB
+	namespace Usage {
+        class Main {
+	        video_capture
+	        helloworld
+        }
+        class HelloWorld {
+	        +\_middle_shoulder()
+	        +\_neck()
+        }
+	}
+	namespace virtual_landmark {
+        class AbstractLandmark {
+	        +\_\_len\_\_()
+	        +\_\_iter\_\_()
+	        +\_\_getitem\_\_(idx)
+	        +\_\_contains\_\_(idx)
+	        +\_add\_landmark(name,point)
+	        +\_add\_connection(name,targets)
+	        +as_landmark_list()
+        }
+        class VirtualLandmark {
+	        +\_process\_virtual\_landmarks()
+	        +virtual_landmark()
+        }
+        class VirtualPoseLandmark {
+	        +\_\_repr\_\_()
+	        +\_\_getitem\_\_(key)
+	        +\_\_getattr\_\_(name)
+	        +\_\_contains\_\_(item)
+	        +\_load\_builtin\_landmarks()
+	        +add(name,index)
+        }
+        class calculus {
+	        +middle(p1,p2)
+	        +projection(p1,p2,target)
+	        +centroid(*points)
+	        +mirror(p,axis_point)
+	        +weighted_average(p1,p2,w1,w2)
+	        +extend(p1,p2,factor)
+	        +normalize(p1,p2)
+	        +interpolate(p1,p2,alpha)
+	        +bisector(p1,pivot,p2)
+	        +rotate(p,axis_p1,axis_p2,angle)
+        }
+        class landmark {
+	        +wrapper(fn)
+        }
+	}
+	namespace drawing_utils {
+        class Connections {
+	        +CUSTOM_CONNECTION
+	        +POSE_CONNECTIONS
+	        +ALL_CONNECTIONS
+        }
+        class Style {
+	        +get_extended_pose_landmarks_style(landmarks)
+        }
+	}
+
+	<<package>> calculus
+	<<decorator>> landmark
+	<<package>> Style
+
+    Main --> HelloWorld : uses
+    Main --> calculus : uses
+    Main --> Connections : uses
+    Main --> Style : uses
+    landmark ..> HelloWorld : decorate
+    VirtualLandmark --|> AbstractLandmark
+    AbstractLandmark --> VirtualPoseLandmark : uses
+    HelloWorld --|> VirtualLandmark
