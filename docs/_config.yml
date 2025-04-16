@@ -1,0 +1,12 @@
+title: Virtual Landmark
+description: Documentation for the virtual landmark extension system based on MediaPipe.
+theme: minima
+markdown: kramdown
+baseurl: "" # No subpath
+url: ""      # GitHub Pages will auto-detect
+
+# Optional settings
+permalink: pretty
+exclude:
+  - Gemfile
+  - Gemfile.lock
