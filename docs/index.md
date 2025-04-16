@@ -1,11 +1,18 @@
 ---
 title: Home
+layout: home
 nav_order: 1
+description: "The virtual landmark definition for Mediapipe Pose"
+permalink: /
 ---
-# Welcome to virtual_landmark_python
+# Virtual Landmark
+{: .fs-9 }
 
-**virtual_landmark_python** is a Python module for extending [MediaPipe Pose](https://google.github.io/mediapipe/solutions/pose.html) with **custom virtual landmarks**. It allows you to define new body points geometrically (e.g., midpoints, projections, bisectors) and integrate them seamlessly into the MediaPipe pipeline.
+Extend [MediaPipe Pose](https://google.github.io/mediapipe/solutions/pose.html) enabling virtual landmarks through geometrically calculated 3D points and their edges
+{: .fs-6 .fw-300 }
 
+[Get started now](#getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
+[View it on GitHub][https://github.com/cvpose/virtual_landmark_python]{: .btn .fs-5 .mb-4 .mb-md-0 }
 ---
 
 ## What This Library Does
@@ -29,7 +36,7 @@ You’ll find detailed documentation on:
 
 ---
 
-## Quick Start
+## Getting started
 
 Install MediaPipe:
 
