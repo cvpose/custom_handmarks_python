@@ -6,3 +6,17 @@ color_scheme: light
 
 # Optional: repo link
 repository_url: https://github.com/cvpose/virtual_landmark_python
+
+
+plugins:
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
+  - jekyll-include-cache
+  - jekyll-seo-tag
+
+# Ative suporte a classes personalizadas (ex: {:.note})
+markdown: kramdown
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
