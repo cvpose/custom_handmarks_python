@@ -154,7 +154,7 @@ axs[1].axis("off")
 ```
 
     
-![png](output_11_1.png)
+![png](../images/img.png)
     
 
 
@@ -273,6 +273,6 @@ plt.show()
 
 
     
-![png](output_21_0.png)
+![png](../images/landmarks.png)
     
 
