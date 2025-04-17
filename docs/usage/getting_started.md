@@ -60,9 +60,3 @@ If not, you can place any human photo in that directory. The image should contai
 You should see a window pop up with the landmarks and connections drawn over the image.
 
 ---
-
-## 5. Next Steps
-
-Continue with the [Create Landmark](./create_landmark.md) guide to learn how to define your own virtual landmarks.
-
----

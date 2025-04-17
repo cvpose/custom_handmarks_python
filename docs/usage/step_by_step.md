@@ -153,11 +153,8 @@ axs[1].set_title("Image RGB")
 axs[1].axis("off")
 ```
 
-    
 ![png](../images/img.png)
     
-
-
 ### Creating Virtual Landmarks and Custom Connections
 
 After obtaining the raw pose landmarks from MediaPipe, the next step is to enrich this data with additional computed landmarks and define meaningful connections between them.
