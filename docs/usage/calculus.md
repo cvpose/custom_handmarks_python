@@ -21,9 +21,10 @@ Calculates the midpoint between two points in 3D space. This is useful for ident
 
 **Mathematical Formula**:
 
-\[
+\begin{aligned}
 \text{middle} = \frac{p_1 + p_2}{2}
-\]
+\end{aligned}
+
 
 This formula adds the coordinates of `p1` and `p2` component-wise, then divides each result by 2. The resulting point lies exactly halfway between them in 3D space.
 
