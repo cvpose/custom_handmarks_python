@@ -42,9 +42,9 @@ Computes the centroid (or geometric center) of an arbitrary number of 3D points.
 
 **Mathematical Formula**:
 
-\[
+\begin{aligned}
 \text{centroid} = \frac{1}{n} \sum_{i=1}^{n} p_i
-\]
+\end{aligned}
 
 Each coordinate (x, y, z) is averaged independently over all input points. This results in a new point that represents the average spatial location of the entire group.
 
@@ -64,8 +64,8 @@ Projects a point (`target`) orthogonally onto the line defined by two other poin
 
 
 \begin{aligned}
-v &= p_2 - p_1 \\
-u &= \text{target} - p_1 \\
+v &= p_2 - p_1 \\n
+u &= \text{target} - p_1 \\n
 \text{proj} &= p_1 + \frac{u \cdot v}{v \cdot v} \cdot v
 \end{aligned}
 
