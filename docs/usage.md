@@ -6,4 +6,4 @@ has_children: true
 
 # Usage
 
-This section contains usage guides.
+The virtual landmark system extends MediaPipe's native pose detection by allowing developers to define, compute, and visualize custom 3D points derived from existing anatomical landmarks. This enables more precise tracking, pose correction, biomechanical analysis, and domain-specific logic in motion studies or health applications. By combining mathematical operations from the `calculus` module with a declarative interface (`@landmark`), the system offers a powerful and flexible framework to enrich pose data with context-aware, geometrically consistent virtual references.

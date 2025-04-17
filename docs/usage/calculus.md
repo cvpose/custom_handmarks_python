@@ -64,8 +64,8 @@ Projects a point (`target`) orthogonally onto the line defined by two other poin
 
 
 \begin{aligned}
-v &= p_2 - p_1 \\n
-u &= \text{target} - p_1 \\n
+v &= p_2 - p_1 \\\\
+u &= \text{target} - p_1 \\\\
 \text{proj} &= p_1 + \frac{u \cdot v}{v \cdot v} \cdot v
 \end{aligned}
 
