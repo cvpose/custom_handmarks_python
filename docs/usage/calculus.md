@@ -4,8 +4,6 @@ nav_order: 4
 parent: Usage
 ---
 
-{% include mathjax.html %}
-
 # Calculus Reference
 
 The `calculus` module provides a set of reusable geometric functions designed to support the definition of virtual landmarks. These operations work directly with 3D points and enable the construction of complex anatomical references, symmetry lines, extrapolated joints, and more.
