@@ -21,10 +21,11 @@ Calculates the midpoint between two points in 3D space. This is useful for ident
 
 **Mathematical Formula**:
 
+$$
 \begin{aligned}
 \text{middle} = \frac{p_1 + p_2}{2}
 \end{aligned}
-
+$$
 
 This formula adds the coordinates of `p1` and `p2` component-wise, then divides each result by 2. The resulting point lies exactly halfway between them in 3D space.
 
@@ -42,9 +43,11 @@ Computes the centroid (or geometric center) of an arbitrary number of 3D points.
 
 **Mathematical Formula**:
 
+$$
 \begin{aligned}
 \text{centroid} = \frac{1}{n} \sum_{i=1}^{n} p_i
 \end{aligned}
+$$
 
 Each coordinate (x, y, z) is averaged independently over all input points. This results in a new point that represents the average spatial location of the entire group.
 
@@ -91,9 +94,11 @@ Extends a point beyond another along the same direction vector. This can be used
 
 **Mathematical Formula**:
 
-\[
+$$
+\begin{aligned}
 \text{extended} = p_1 + f \cdot (p_2 - p_1)
-\]
+\end{aligned}
+$$
 
 
 The expression `(p2 - p1)` computes a directional vector. By multiplying it with `factor`, we scale the movement. Adding this to `p1` moves the new point along that direction.
@@ -112,10 +117,11 @@ Calculates the unit vector (direction with magnitude 1) pointing from `p1` to `p
 
 **Mathematical Formula**:
 
-\[
+$$
+\begin{aligned}
 \text{unit} = \frac{p_2 - p_1}{\|p_2 - p_1\|}
-\]
-
+\end{aligned}
+$$
 
 The numerator computes the direction vector. The denominator is its Euclidean norm. The division gives a vector with the same direction but length equal to 1.
 
@@ -147,27 +153,35 @@ Rodrigues' formula is a method for rotating a vector in 3D space around an arbit
 
 1. Compute the **unit vector** along the rotation axis:
 
-\[
-k = \frac{axis\_p2 - axis\_p1}{\|axis\_p2 - axis\_p1\|}
-\]
+$$
+\begin{aligned}
+k = \frac{axis\_p2 - axis\_p1}{\|axis\_p2 - axis\_p1\|} 
+\end{aligned}
+$$
 
 2. Translate the point `p` relative to the axis origin:
 
-\[
+$$
+\begin{aligned}
 v = p - axis\_p1
-\]
+\end{aligned}
+$$
 
 3. Apply Rodrigues' rotation formula:
 
-\[
+$$
+\begin{aligned}
 p_{\text{rotated}} = v \cos(\theta) + (k \times v) \sin(\theta) + k(k \cdot v)(1 - \cos(\theta))
-\]
+\end{aligned}
+$$
 
 4. Translate the result back to the global coordinate system:
 
-\[
+$$
+\begin{aligned}
 p_{\text{final}} = axis\_p1 + p_{\text{rotated}}
-\]
+\end{aligned}
+$$
 
 ### Visual Intuition
 
