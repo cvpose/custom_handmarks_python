@@ -26,31 +26,6 @@ The visual comparison below demonstrates the evolution from the default MediaPip
 
 ---
 
-## Getting Started
-
-To get started, you’ll need Python 3.8 or later. Then, install the required dependencies:
-
-```bash
-pip install mediapipe numpy opencv-python virtual-landmark
-```
-
-Clone this repository locally:
-
-```bash
-git clone https://github.com/cvpose/virtual_landmark_python.git
-cd virtual_landmark_python
-```
-
-So run the included Hello World:
-
-```bash
-python examples/hello_world.py
-```
-
-This script loads an image, runs pose detection, and overlays both default and virtual landmarks. For step by step guide go to [Usage page](usage.md)
-
----
-
 ## About the Project
 
 **virtual-landmark** is © 2024 by the [cvpose team](https://github.com/cvpose), and provides a framework for defining and integrating virtual pose landmarks into the MediaPipe pipeline.
