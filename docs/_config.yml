@@ -21,3 +21,6 @@ kramdown:
     block:
       line_numbers: false
   math_engine: mathjax
+
+include:
+  - _includes
