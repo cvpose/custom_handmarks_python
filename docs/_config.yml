@@ -13,6 +13,7 @@ plugins:
   - jekyll-titles-from-headings
   - jekyll-include-cache
   - jekyll-seo-tag
+  - jekyll-include
 
 # Ative suporte a classes personalizadas (ex: {:.note})
 markdown: kramdown
@@ -24,3 +25,11 @@ kramdown:
 
 include:
   - _includes
+
+default:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      mathjax: true
