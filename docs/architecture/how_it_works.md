@@ -23,7 +23,7 @@ from virtual_landmark import VirtualLandmark, landmark
 import virtual_landmark.calculus as calc
 
 class CustomLandmarks(VirtualLandmark):
-
+  
     @landmark("NECK", connection=["LEFT_SHOULDER", "RIGHT_SHOULDER"])
     def _neck(self):
         return calc.middle(self.LEFT_SHOULDER, self.RIGHT_SHOULDER)
