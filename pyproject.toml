@@ -34,7 +34,6 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest", "black", "ruff", "mypy"]
-docs = ["mkdocs", "mkdocs-material"]
 
 [project.urls]
 Homepage = "https://github.com/cvpose/virtual_handmark_python"
@@ -48,7 +47,6 @@ addopts = "--cov=virtual_landmark --cov-report=term-missing --cov-report=html -p
 testpaths = [
     "tests"
 ]
-
 
 [tool.coverage.run]
 branch = true
