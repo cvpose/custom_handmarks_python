@@ -32,8 +32,20 @@ Each component is self-contained but designed to interact fluidly within the sys
 
 The following diagram summarizes the relationships between key classes:
 
-![Class Diagram](./diagrams/class.png)
+![Class Diagram](../diagrams/class.png)
 
 It highlights inheritance (e.g., `VirtualLandmark` → `AbstractLandmark`) and key collaboration patterns used to manage landmark definitions and rendering.
 
 ---
+
+## Summary
+
+| Component                  | Role                                               | Description                                             |
+|---------------------------|----------------------------------------------------|---------------------------------------------------------|
+| `AbstractLandmark`        | Core storage of landmark data                      | Foundation for all landmark-based access                |
+| `VirtualLandmark`         | Executes virtual landmark logic                    | Detects and registers `@landmark`-decorated methods     |
+| `@landmark` Decorator     | Declares landmark methods                          | Connects user-defined logic to system internals         |
+| `VirtualPoseLandmark`     | Named access to all landmark indices               | Mimics `PoseLandmark.LEFT_SHOULDER.value` access        |
+| `calculus.py`             | Reusable geometry utilities                        | Used by virtual landmarks for spatial computation       |
+| `Connections`             | Unified landmark connection list                   | Includes default + custom edges                         |
+| `Style`                   | Pose rendering style                               | Custom style mapping for landmarks                      |
