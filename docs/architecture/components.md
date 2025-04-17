@@ -1,24 +1,28 @@
 ---
 title: Components
-nav_order: 1
+nav_order: 3
 parent: Architecture
 ---
-## Components
+
+# Components
+
+This section provides a detailed overview of the key components in the `virtual_landmark` package. Each module is responsible for a specific concern in the pipeline, from landmark creation to rendering.
+
+---
 
 ## 1. `abstract_landmark.py`
 
 **Class:** `AbstractLandmark`
 
-### Purpose:
-Base class responsible for managing and storing both original and virtual landmarks, providing iterable access and landmark list conversion.
+### Purpose
+Provides the foundational data structure for managing both original and virtual landmarks. It exposes a clean, iterable interface and supports conversion to MediaPipe-compatible formats.
 
-#### Responsibilities:
-- Index-based and iterable access to landmarks.
-- Addition of virtual landmarks via `_add_landmark`.
-- Connection definition support via `_add_connection`.
-- Export to `NormalizedLandmarkList`.
+### Responsibilities
+- Stores landmarks with index-based access.
+- Adds new landmarks and defines interconnections.
+- Converts the internal structure to `NormalizedLandmarkList`.
 
-### Key Methods:
+### Key Methods
 - `__getitem__`, `__iter__`, `__len__`
 - `_add_landmark(name, point)`
 - `_add_connection(name, targets)`
@@ -30,18 +34,19 @@ Base class responsible for managing and storing both original and virtual landma
 
 **Class:** `VirtualLandmark`
 
-### Purpose:
-Concrete implementation that detects and executes all `@landmark`-decorated methods.
+### Purpose
+Concrete subclass of `AbstractLandmark` responsible for discovering and executing all methods decorated with `@landmark`.
 
-### Inherits:
+### Inherits
 - `AbstractLandmark`
 
-### Responsibilities:
-- Scans and processes decorated methods.
-- Registers virtual landmarks and their connections dynamically.
-- Exposes `virtual_landmark` accessor object for consistent indexing.
+### Responsibilities
+- Uses Python introspection to locate decorated methods.
+- Computes and registers virtual landmarks.
+- Builds custom topologies via connection metadata.
+- Merges virtual landmarks with existing landmark sets.
 
-### Key Method:
+### Key Method
 - `_process_virtual_landmarks()`
 
 ---
@@ -50,14 +55,14 @@ Concrete implementation that detects and executes all `@landmark`-decorated meth
 
 **Function:** `@landmark(name, connection=[])`
 
-### Purpose:
-Decorator that registers a method as a virtual landmark generator.
+### Purpose
+Decorator that marks a method as a virtual landmark provider, enabling its discovery and execution during the landmark processing phase.
 
-### What it does:
-- Tags the method with `_landmark_name` and `_landmark_connections`.
-- Enables later introspection by `VirtualLandmark`.
+### What It Does
+- Attaches `_landmark_name` and `_landmark_connections` metadata to methods.
+- Enables automated indexing and connection registration.
 
-### Example:
+### Example
 ```python
 @landmark("NECK", connection=["LEFT_SHOULDER", "RIGHT_SHOULDER"])
 def _neck(self):
@@ -70,15 +75,16 @@ def _neck(self):
 
 **Class:** `VirtualPoseLandmark`
 
-### Purpose:
-Enum-like interface for accessing all original and custom landmark indices by name.
+### Purpose
+An enum-like registry used to dynamically manage and retrieve landmark indices by name. It supports both programmatic and attribute-style access.
 
-### Responsibilities:
-- `add(name, index)` registers new landmarks.
-- Supports access via `.NAME`, `["NAME"]`, and `.NAME.value`.
+### Responsibilities
+- Stores associations between landmark names and their indices.
+- Provides flexible access patterns via `.NAME`, `["NAME"]`, or `.NAME.value`.
 
-### Key Methods:
-- `__getitem__`, `__getattr__`, `__contains__`, `add()`
+### Key Methods
+- `add(name, index)`
+- `__getitem__`, `__getattr__`, `__contains__`
 
 ---
 
@@ -86,10 +92,10 @@ Enum-like interface for accessing all original and custom landmark indices by na
 
 **Module:** `calculus`
 
-### Purpose:
-Contains reusable geometric computations used in virtual landmark generation.
+### Purpose
+Provides a set of reusable geometric utilities to calculate custom landmarks. These functions abstract common operations like midpoint, projection, and vector rotation.
 
-### Functions:
+### Key Functions
 - `middle(p1, p2)`
 - `centroid(*points)`
 - `projection(p1, p2, target)`
@@ -104,13 +110,13 @@ Contains reusable geometric computations used in virtual landmark generation.
 
 **Class:** `Connections`
 
-### Constants:
+### Purpose
+Defines and aggregates landmark connections, combining MediaPipe defaults with dynamically registered virtual edges.
+
+### Constants
 - `CUSTOM_CONNECTION`
 - `POSE_CONNECTIONS`
 - `ALL_CONNECTIONS`
-
-### Purpose:
-Combines default MediaPipe and custom connections for use in visualization.
 
 ---
 
@@ -118,8 +124,10 @@ Combines default MediaPipe and custom connections for use in visualization.
 
 **Class:** `Style`
 
-### Method:
-- `get_extended_pose_landmarks_style(landmarks)`
+### Purpose
+Defines visual styles for landmarks and connections to be used with MediaPipe’s drawing utilities.
 
-### Purpose:
-Returns drawing styles for default and custom landmarks.
+### Key Method
+- `get_extended_pose_landmarks_style(landmarks)` — returns a style configuration that supports both native and custom landmarks.
+
+---
