@@ -1,7 +1,7 @@
 ---
-title: Architectural Overview
+title: Architecture
 nav_order: 2
-has_children: false
+has_children: true
 ---
 # Architectural Overview
 
