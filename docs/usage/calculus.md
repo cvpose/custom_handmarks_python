@@ -1,7 +1,7 @@
 ---
 title: Calculus
 nav_order: 4
-parent: Guides
+parent: Usage
 ---
 
 # Calculus Reference
