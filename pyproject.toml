@@ -1,6 +1,6 @@
 [project]
 name = "virtual-landmark"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name = "Denys G. Santos", email = "gsdenys@gmail.com" },
 ]
