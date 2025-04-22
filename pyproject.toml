@@ -24,7 +24,6 @@ classifiers = [
 keywords = ["mediapipe", "custom landmarks", "ladmarks", "pose estimation", "computer vision", "biomechanics", "motion tracking"]
 
 license = "Apache-2.0"
-license-files = ["LICENSE"]
 
 dependencies = [
     "mediapipe >=0.10.0",
