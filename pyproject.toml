@@ -34,10 +34,10 @@ dependencies = [
 dev = ["pytest", "black", "ruff", "mypy"]
 
 [project.urls]
-Homepage = "https://github.com/cvpose/virtual_handmark_python"
-Documentation = "https://github.com/cvpose/virtual_handmark_python/wiki"
-Issues = "https://github.com/cvpose/virtual_handmark_python/issues"
-Source = "https://github.com/cvpose/virtual_handmark_python"
+Homepage = "https://cvpose.github.io/virtual_landmark_python"
+Documentation = "https://cvpose.github.io/virtual_landmark_python"
+Issues = "https://github.com/cvpose/virtual_landmark_python/issues"
+Source = "https://github.com/cvpose/virtual_landmark_python"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
