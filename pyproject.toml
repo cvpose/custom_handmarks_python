@@ -1,6 +1,6 @@
 [project]
-name = "virtual_landmark"
-version = "0.0.1"
+name = "cvpose-virtual-landmark"
+version = "0.1.0"
 authors = [
   { name = "Denys G. Santos", email = "gsdenys@gmail.com" },
 ]
