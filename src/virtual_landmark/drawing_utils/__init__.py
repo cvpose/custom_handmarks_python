@@ -1,7 +1,7 @@
 from .connections import Connections
-from .style import get_default_pose_landmarks_style
+from .style import get_extended_pose_landmarks_style
 
 __ALL__ = [
     "Connections",
-    "get_default_pose_landmarks_style"
+    "get_extended_pose_landmarks_style"
 ]
